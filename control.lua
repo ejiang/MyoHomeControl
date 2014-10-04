@@ -29,11 +29,11 @@ function onPoseEdge(pose, edge)
     elseif (pose == 'waveOut') and (edge == 'on') then
         yaw = reposition(myo.getYaw())
         myo.debug(yaw)
-        if (yaw >= math.pi) and (yaw <= ((2*math.pi)-1)) then
+        if (yaw >= math.pi) and (yaw <= ((2*math.pi)-0.5)) then
             myo.keyboard('1', 'press')
             myo.keyboard('return', 'press')
             -- actually, looks like these ranges are wrong...
-        elseif (yaw > ((2*math.pi) - 1)) or (yaw < 1) then
+        elseif (yaw > ((2*math.pi) - 0.5)) or (yaw < 1) then
             myo.keyboard('2', 'press')
             myo.keyboard('return', 'press')
         else
