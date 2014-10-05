@@ -22,11 +22,21 @@ function reposition(y) -- y for yaw
     return rerepresent(y - center)
 end
 
+-- global variable
+idle = 0
+accept = 1
+state = idle
+lasttime = 0
+
 function onPoseEdge(pose, edge)
     myo.debug("onPoseEdge: " .. pose .. ", " .. edge)
-    if (pose == 'waveOut') and (edge == 'on') then
+    if (pose == 'thumbToPinky') and (edge == 'on') then
+        lasttime = myo.getTimeMilliseconds()
+        myo.vibrate('short')
+    elseif (pose == 'waveOut') and (edge == 'on') and (myo.getTimeMilliseconds() - lasttime < 8000) then
         center = myo.getYaw()
-    elseif (pose == 'waveIn') and (edge == 'on') then
+        myo.vibrate('short')
+    elseif (pose == 'waveIn') and (edge == 'on') and (myo.getTimeMilliseconds() - lasttime < 8000) then
         yaw = reposition(myo.getYaw())
         myo.debug(yaw)
         if (yaw >= math.pi) and (yaw <= ((2*math.pi)-0.5)) then
@@ -40,6 +50,7 @@ function onPoseEdge(pose, edge)
             myo.keyboard('3', 'press')
             myo.keyboard('return', 'press')
         end
+        myo.vibrate('short')
     end
 end
 

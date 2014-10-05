@@ -1,9 +1,10 @@
 import requests
 
+devices = {'1': "http://", '2': 'http://', '3': 'http://'}
+
 while True:
     a = raw_input()
-    payload = {'light': int(a)}
-    requests.post("http://192.168.15.200:8888/", params=payload)
+    requests.get(devices[a])
 
 #192.168.15.200
 #wpa_cli status
