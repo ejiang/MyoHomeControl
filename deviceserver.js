@@ -1,16 +1,16 @@
 var http = require("http");
 var exec = require("child_process").exec;
 
+var toggle = false;
+
 var decide = function(request) {
   // so, now we want it to be more of a toggle
-  var ret = exec("test -e /tmp/foo");
-  ret.exit(function(code, signal){
-    if (!code) { // if file doesn't exist
-      exec("touch /tmp/foo");
-    } else {
-      exec("rm /tmp/foo");
-    }
-  });
+  if (!toggle) { // if file doesn't exist
+    exec("touch /tmp/foo");
+  } else {
+    exec("rm /tmp/foo");
+  }
+  toggle = !toggle;
 }
 
 http.createServer(function(request, response) {
