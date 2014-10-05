@@ -1,9 +1,15 @@
-var iotkit-comm = require('iotkit-comm');
-var path = require('path');
-var spec = new iotkit.ServiceSpec(path.join(__dirname, "server-spec.json"));
-iotkit.createService(spec, function (service) {
-  service.comm.setReceivedMessageHandler(function(client, msg, context) {
-    console.log("received from client: " + msg.toString());
-    service.comm.sendTo(client, "hi");
-  });
-});
+var http = require("http");
+var url = require("url");
+var exec = require("child_process").exec;
+
+http.createServer(function(request, response) {
+  if (url.parse(request.url, true)['query']['light'] == '2') {
+    exec("touch /tmp/foo");
+  } else {
+    exec("rm /tmp/foo");
+  }
+  
+  response.writeHead(200, {"Content-Type": "text/plain"});
+  response.write("Hello World");
+  response.end();
+}).listen(8888);

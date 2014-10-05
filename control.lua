@@ -24,9 +24,9 @@ end
 
 function onPoseEdge(pose, edge)
     myo.debug("onPoseEdge: " .. pose .. ", " .. edge)
-    if (pose == 'waveIn') and (edge == 'on') then
+    if (pose == 'waveOut') and (edge == 'on') then
         center = myo.getYaw()
-    elseif (pose == 'waveOut') and (edge == 'on') then
+    elseif (pose == 'waveIn') and (edge == 'on') then
         yaw = reposition(myo.getYaw())
         myo.debug(yaw)
         if (yaw >= math.pi) and (yaw <= ((2*math.pi)-0.5)) then
